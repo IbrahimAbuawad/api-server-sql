@@ -13,10 +13,10 @@ const router = express.Router();
 
 // routes
 router.get('/', getClothes);
-router.get('/:id',  getClothes);
+router.get('/:id', validator, getClothes);
 router.post('/', createCloth);
-router.put('/:id',  updateCloth);
-router.delete('/:id', deleteCloth);
+router.put('/:id', validator, updateCloth);
+router.delete('/:id', validator, deleteCloth);
 
 async function getClothes(req, res, next) {
   try {
