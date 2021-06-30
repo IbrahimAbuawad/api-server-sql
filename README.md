@@ -8,7 +8,7 @@
 
 - [GitHub Actions](https://github.com/IbrahimAbuawad/api-server/actions) 
 - [Pull Request](https://github.com/IbrahimAbuawad/api-server/pull/4)
-- [HEROKU App](https://ibrahimawad-basic-api-server.herokuapp.com)
+- [HEROKU App](https://ibrahimawad-api-server.herokuapp.com)
 
 ### Setup
 
