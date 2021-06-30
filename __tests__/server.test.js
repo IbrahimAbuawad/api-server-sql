@@ -1,101 +1,44 @@
 'use strict';
-const supertest = require('supertest');
-const server = require('../src/server');
-const request = supertest(server);
-
-
-describe('bad method/request', () => {
+const supergoose = require('@code-fellows/supergoose');
+const { app } = require('../src/server');
+const request = supergoose(app);
+describe('Server Test Group', () => {
+  let id;
   it('Handles bad route', async () => {
-    const response = await request.get('/bad');
+    const response = await request.get('/hello');
     expect(response.status).toEqual(404);
   });
-
-});
-describe('The correct status codes and returned data for each REST route', () => {
-  let id;
-  it('post method test', async () => {
-    const body = {
-      name: 'drink',
-      price: '1',
+  it('Handles bad method', async () => {
+    const response = await request.post('/person?name=ibrahim');
+    expect(response.status).toEqual(404);
+  });
+  it('Handles creating new food', async () => {
+    let foodObj = { name: 'test', price: '3' };
+    const response = await request.post('/api/v1/food').send(foodObj);
+    id = response.body._id;
+    expect(response.body.name).toBe(foodObj.name);
+    expect(response.body.price).toBe(foodObj.price);
+    expect(response.status).toEqual(200);
+  });
+  it('Handles reading foods', async () => {
+    const response = await request.get('/api/v1/food');
+    expect(response.body[0].name).toBe('test');
+    expect(response.body[0].price).toBe('3');
+    expect(response.body.length).toBe(1);
+    expect(response.status).toEqual(200);
+  });
+  it('Handles updating a record', async () => {
+    const newObj = {
+      name: 'NO',
+      price: '5',
     };
-    let result = await request.post('/food').send(body);
-    expect(result.statusCode).toEqual(200);
-    expect(result.body.data.name).toBe(body.name);
-    expect(result.body.data.age).toBe(body.age);
+    const response = await request.put('/api/v1/food/' + id).send(newObj);
+    expect(response.status).toEqual(200);
+    expect(response.body.name).toBe('NO');
   });
-  it('Read a list of records using GET', async () => {
-    const body1 = {
-      name: 'drink',
-      price: '1',
-    };
-    const body2 = {
-      name: 'drink',
-      price: '1',
-    };
-    await request.post('/food').send(body1);
-    let result2 = await request.post('/food').send(body2);
-    id = result2.body.id;
-    let result = await request.get('/food');
-    expect(result.body.length).toBe(3);
-  });
-  it('Read a record using GET', async () => {
-    let result3 = await request.get('/food/' + id);
-    console.log(result3.body);
-    expect(result3.status).toEqual(200);
-    expect(result3.body.data.name).toBe('drink');
-  });
-  it('Update a record using PUT', async () => {
-    let result4 = await request.put('/food/' + id).send({ name: 'modified', price: '2' });
-    expect(result4.body.data.name).toEqual('modified');
-  });
-  it('Destroy a record using DELETE', async () => {
-    let result5 = await request.delete('/food/' + id);
-    expect(result5.body).toEqual('');
+  it('Handles deleting a record', async () => {
+    const response = await request.delete('/api/v1/food/' + id);
+    expect(response.status).toEqual(200);
+    expect(response.body.name).toBe('NO');
   });
 });
-
-describe('The correct status codes and returned data for each REST route', () => {
-  let id;
-  it('post method test', async () => {
-    const body = {
-      name: 'max',
-      price: '30',
-    };
-    let result = await request.post('/clothes').send(body);
-    expect(result.statusCode).toEqual(200);
-    expect(result.body.data.name).toBe(body.name);
-    expect(result.body.data.age).toBe(body.age);
-  });
-  it('Read a list of records using GET', async () => {
-    const body1 = {
-      name: 'max',
-      price: '30',
-    };
-    const body2 = {
-      name: 'max',
-      price: '30',
-    };
-    await request.post('/food').send(body1);
-    let result2 = await request.post('/clothes').send(body2);
-    id = result2.body.id;
-    let result = await request.get('/clothes');
-    expect(result.body.length).toBe(3);
-  });
-  it('Read a record using GET', async () => {
-    let result3 = await request.get('/clothes/' + id);
-    console.log(result3.body);
-    expect(result3.status).toEqual(200);
-    expect(result3.body.data.name).toBe('max');
-  });
-  it('Update a record using PUT', async () => {
-    let result4 = await request.put('/clothes/' + id).send({ name: 'modified', price: '50' });
-    expect(result4.body.data.name).toEqual('modified');
-  });
-  it('Destroy a record using DELETE', async () => {
-    let result5 = await request.delete('/clothes/' + id);
-    expect(result5.body).toEqual('');
-  });
-});
-
-
-
