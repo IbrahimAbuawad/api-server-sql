@@ -2,26 +2,28 @@
 
 const express = require('express');
 
-const foodModels = require('../models/food');
-const Interface = require('../models/data-collection-class');
+const foodModel = require('../models/food.js');
+const DataCollection = require('../models/data-collection-class');
 // const validator = require('../middleware/validator');
-
-const clothes = new Interface(foodModels);
 
 
 const router = express.Router();
+
+const foods = new DataCollection(foodModel);
 
 // routes
 router.get('/', getFood);
 router.get('/:id', getFood);
 router.post('/', createFood);
 router.put('/:id', updateFood);
-router.delete('/:id',  deleteFood);
+router.delete('/:id', deleteFood);
 
 async function getFood(req, res, next) {
   try {
-    const resObj = await clothes.read(req.params.id);
+
+    const resObj = await foods.read(req.params.id);
     res.json(resObj);
+
   }
 
   catch (e) {
@@ -29,9 +31,9 @@ async function getFood(req, res, next) {
   }
 }
 
-function createFood(req, res, next) {
+async function createFood(req, res, next) {
   try {
-    const resObj = clothes.create(req.body);
+    const resObj = await foods.create(req.body);
     res.status(201).json(resObj);
   }
   catch (e) {
@@ -40,7 +42,7 @@ function createFood(req, res, next) {
 }
 async function updateFood(req, res, next) {
   try {
-    const resObj = await clothes.update(req.params.id, req.body);
+    const resObj = await foods.update(req.params.id, req.body);
     res.json(resObj);
   }
   catch (e) {
@@ -51,7 +53,7 @@ async function updateFood(req, res, next) {
 
 async function deleteFood(req, res, next) {
   try {
-    const resObj = await clothes.delete(req.params.id);
+    const resObj = await foods.delete(req.params.id);
     res.json(resObj);
   }
   catch (e) {

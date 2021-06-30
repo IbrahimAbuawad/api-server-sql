@@ -60,7 +60,7 @@ describe('api-server', () => {
 
     const response = await request.delete(`/api/v1/clothes/${id}`);
 
-    expect(response.status).toEqual(204);
+    expect(response.status).toEqual(200);
 
 
   });

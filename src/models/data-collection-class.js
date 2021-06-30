@@ -1,6 +1,6 @@
 'use strict';
 
-class Interface {
+class DataCollection {
   constructor(model) {
     this.model = model;
   }
@@ -26,4 +26,4 @@ class Interface {
   }
 }
 
-module.exports = Interface;
+module.exports = DataCollection;
