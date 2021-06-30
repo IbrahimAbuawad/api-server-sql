@@ -3,12 +3,12 @@
 const express = require('express');
 
 const clothesModels = require('../models/clothes');
-const Interface = require('../models/data-collection-class');
+const DataCollection = require('../models/data-collection-class');
 // const validator = require('../middleware/validator');
 
 const router = express.Router();
 
-const clothes = new Interface(clothesModels);
+const clothes = new DataCollection(clothesModels);
 
 
 
