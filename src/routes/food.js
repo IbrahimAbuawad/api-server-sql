@@ -4,7 +4,7 @@ const express = require('express');
 
 const foodModels = require('../models/food');
 const Interface = require('../models/data-collection-class');
-const validator = require('../middleware/validator');
+// const validator = require('../middleware/validator');
 
 const clothes = new Interface(foodModels);
 
@@ -13,15 +13,15 @@ const router = express.Router();
 
 // routes
 router.get('/', getFood);
-router.get('/:id', validator, getFood);
+router.get('/:id', getFood);
 router.post('/', createFood);
-router.put('/:id', validator, updateFood);
-router.delete('/:id', validator, deleteFood);
+router.put('/:id', updateFood);
+router.delete('/:id',  deleteFood);
 
 async function getFood(req, res, next) {
   try {
     const resObj = await clothes.read(req.params.id);
-    res.status(200).json(resObj);
+    res.json(resObj);
   }
 
   catch (e) {
@@ -32,25 +32,27 @@ async function getFood(req, res, next) {
 function createFood(req, res, next) {
   try {
     const resObj = clothes.create(req.body);
-    res.status(200).json(resObj);
+    res.status(201).json(resObj);
   }
   catch (e) {
     next(e);
   }
 }
-function updateFood(req, res, next) {
+async function updateFood(req, res, next) {
   try {
-    const resObj = clothes.update(req.params.id, req.body);
-    res.status(200).json(resObj);
+    const resObj = await clothes.update(req.params.id, req.body);
+    res.json(resObj);
   }
   catch (e) {
     next(e);
   }
 }
-function deleteFood(req, res, next) {
+
+
+async function deleteFood(req, res, next) {
   try {
-    const resObj = clothes.delete(req.params.id);
-    res.status(204).json(resObj);
+    const resObj = await clothes.delete(req.params.id);
+    res.json(resObj);
   }
   catch (e) {
     next(e);

@@ -1,31 +1,32 @@
 'use strict';
 
 
+const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
 
-const error404 = require('./ error-handlers/404');
-const error500 = require('./ error-handlers/500');
+const error404 = require('./error-handlers/404');
+const error500 = require('./error-handlers/500');
 
 const logger = require('./middleware/logger');
 
-const express = require('express');
-
-const clotheRouter = require('./routes/clothes');
-const foodRouter = require('./routes/food');
-
-
 const app = express();
+
+const foodRouter = require('./routes/food');
+const clotheRouter = require('./routes/clothes');
+
 
 
 app.use(express.json());
+app.use(morgan('combined'));
 
 app.use(cors());
 
 
 app.use(logger);
 
-app.use('/clothes',clotheRouter);
-app.use('/food',foodRouter);
+app.use('/api/v1/food',foodRouter);
+app.use('/api/v1/clothes',clotheRouter);
 
 
 // app.use(validator);
