@@ -6,8 +6,8 @@
 
 ### Links and Resources
 
-- [GitHub Actions](https://github.com/IbrahimAbuawad/basic-api-server/actions) 
-- [Pull Request](https://github.com/IbrahimAbuawad/basic-api-server/pull/1)
+- [GitHub Actions](https://github.com/IbrahimAbuawad/api-server/actions) 
+- [Pull Request](https://github.com/IbrahimAbuawad/api-server/pull/4)
 - [HEROKU App](https://ibrahimawad-basic-api-server.herokuapp.com)
 
 ### Setup
@@ -35,4 +35,4 @@
 
 ### UML
 
-![UML](./UML_Basic_Api_Server.jpg)
+![UML](./api-server-lab04.jpg)
