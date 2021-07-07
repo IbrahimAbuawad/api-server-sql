@@ -1,4 +1,4 @@
-# api-server
+# auth-api-sql
 
 ## Project: Data Modeling
 
@@ -6,9 +6,9 @@
 
 ### Links and Resources
 
-- [GitHub Actions](https://github.com/IbrahimAbuawad/api-server/actions) 
-- [Pull Request](https://github.com/IbrahimAbuawad/api-server/pull/4)
-- [HEROKU App](https://ibrahimawad-api-server.herokuapp.com)
+- [GitHub Actions](https://github.com/IbrahimAbuawad/api-server-sql/actions) 
+- [Pull Request](https://github.com/IbrahimAbuawad/api-server-sql/pull/2)
+- [HEROKU App](https://ibrahim-auth-api-sql.herokuapp.com)
 
 ### Setup
 
