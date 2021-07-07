@@ -13,7 +13,6 @@ const error500 = require('./ error-handlers/500');
 const app = express();
 
 const foodRouter = require('./routes/food');
-const clothesRouter = require('./routes/clothes');
 
 
 
@@ -26,7 +25,6 @@ app.use(cors());
 // app.use(logger);
 
 app.use('/api/v1/food',foodRouter);
-app.use('/api/v1/clothes',clothesRouter);
 
 
 // app.use(validator);

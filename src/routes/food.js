@@ -1,15 +1,14 @@
 'use strict';
 
 const express = require('express');
+const router = express.Router();
 
 const foodModel = require('../models/food.js');
 const DataCollection = require('../models/data-collection-class');
-// const validator = require('../middleware/validator');
-
-
-const router = express.Router();
 
 const foods = new DataCollection(foodModel);
+
+
 
 // routes
 router.get('/', getFood);
@@ -22,7 +21,7 @@ async function getFood(req, res, next) {
   try {
 
     const resObj = await foods.read(req.params.id);
-    res.json(resObj);
+    res.json({resObj:resObj.rows});
 
   }
 
@@ -34,7 +33,7 @@ async function getFood(req, res, next) {
 async function createFood(req, res, next) {
   try {
     const resObj = await foods.create(req.body);
-    res.status(201).json(resObj);
+    res.status(201).json({resObj:resObj.rows[0]});
   }
   catch (e) {
     next(e);
@@ -43,7 +42,7 @@ async function createFood(req, res, next) {
 async function updateFood(req, res, next) {
   try {
     const resObj = await foods.update(req.params.id, req.body);
-    res.json(resObj);
+    res.json({resObj:resObj.rows[0]});
   }
   catch (e) {
     next(e);
@@ -54,7 +53,7 @@ async function updateFood(req, res, next) {
 async function deleteFood(req, res, next) {
   try {
     const resObj = await foods.delete(req.params.id);
-    res.json(resObj);
+    res.json({resObj:resObj.rows[0]});
   }
   catch (e) {
     next(e);
